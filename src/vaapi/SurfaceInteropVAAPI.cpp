@@ -141,21 +141,41 @@ void* SurfaceInteropVAAPI::mapToHost(const VideoFormat &format, void *handle, in
 #ifndef QT_NO_OPENGL
 surface_glx_ptr GLXInteropResource::surfaceGLX(const display_ptr &dpy, GLuint tex)
 {
-    surface_glx_ptr glx = glx_surfaces[tex];
-    if (glx)
-        return glx;
-    glx = surface_glx_ptr(new surface_glx_t(dpy));
-    if (!glx->create(tex))
-        return surface_glx_ptr();
-    glx_surfaces[tex] = glx;
-    return glx;
+//    surface_glx_ptr glx = glx_surfaces[tex];
+//    if (glx)
+//        return glx;
+//    glx = surface_glx_ptr(new surface_glx_t(dpy));
+//    if (!glx->create(tex))
+//        return surface_glx_ptr();
+//    glx_surfaces[tex] = glx;
+//    return glx;
 }
 
 bool GLXInteropResource::map(const surface_ptr& surface, GLuint tex, int w, int h, int)
 {
     Q_UNUSED(w);
     Q_UNUSED(h);
-    surface_glx_ptr glx = surfaceGLX(surface->display(), tex);
+
+    surface_glx_ptr glx = glx_surfaces[tex];
+
+    if(!surface.isNull() && (surface->width() != m_width || m_height != surface->height())) {
+        qDebug() << "HEEEEREEEEE";
+        m_width = surface->width();
+        m_height = surface->height();
+        m_regenerateGlx = true;
+    }
+
+    if(m_regenerateGlx || !glx) {
+
+        if (glx) { glx.clear(); }
+
+        glx = surface_glx_ptr(new surface_glx_t(surface->display()));
+
+        if (!glx->create(tex))
+            glx =  surface_glx_ptr();
+        glx_surfaces[tex] = glx;
+    }
+
     if (!glx) {
         qWarning("Fail to create vaapi glx surface");
         return false;

@@ -27,6 +27,10 @@
 #include <QtGui/QImage>
 #include <QtAV/QtAV_Global.h>
 
+#ifdef PixelFormat
+#undef PixelFormat
+#endif
+
 QT_BEGIN_NAMESPACE
 class QDebug;
 QT_END_NAMESPACE

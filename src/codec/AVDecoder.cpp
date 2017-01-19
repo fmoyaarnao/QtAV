@@ -246,7 +246,7 @@ void AVDecoderPrivate::applyOptionsForDict()
         dict = 0; //aready 0 in av_free
     }
     // enable ref if possible
-    av_dict_set(&dict, "refcounted_frames", enableFrameRef() ? "1" : "0", 0);
+    av_dict_set(&dict, "refcounted_frames", enableFrameRef() ? "1" : "0", 0);   
     if (options.isEmpty())
         return;
     // TODO: use QVariantMap only

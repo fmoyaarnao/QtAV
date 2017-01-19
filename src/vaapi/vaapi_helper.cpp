@@ -333,13 +333,13 @@ display_ptr display_t::create(const NativeDisplay &display)
     if (!native->initialize(display))
         return display_ptr();
     VADisplay va = native->getVADisplay();
-    int majorVersion, minorVersion;
-    VA_ENSURE(vaInitialize(va, &majorVersion, &minorVersion), display_ptr());
+    //int majorVersion, minorVersion;
+    //VA_ENSURE(vaInitialize(va, &majorVersion, &minorVersion), display_ptr());
     display_ptr d(new display_t());
     d->m_display = va;
     d->m_native = native;
-    d->m_major = majorVersion;
-    d->m_minor = minorVersion;
+    //d->m_major = majorVersion;
+    //d->m_minor = minorVersion;
     return d;
 }
 
@@ -359,10 +359,10 @@ display_t::~display_t()
         int mj, mn;
         // FIXME: for libva-xxx we can unload after vaTerminate to avoid crash. But does not work for egl+dma/drm. I really don't know the reason
         qDebug("vaInitialize before terminate. (work around for vaTerminate() crash)");
-        VAWARN(vaInitialize(m_display, &mj, &mn));
+        //VAWARN(vaInitialize(m_display, &mj, &mn));
     }
     qDebug("vaapi: destroy display %p", m_display);
-    VAWARN(vaTerminate(m_display)); //FIXME: what about thread?
+    //VAWARN(vaTerminate(m_display)); //FIXME: what about thread?
     m_display = 0;
 }
 

@@ -64,6 +64,7 @@ class SurfaceInteropVAAPI Q_DECL_FINAL: public VideoSurfaceInterop
 public:
     SurfaceInteropVAAPI(const InteropResourcePtr& res) : frame_width(0), frame_height(0), m_resource(res) {}
     void setSurface(const surface_ptr& surface, int w, int h); // use surface->width/height if w/h is 0
+    surface_ptr getSurface() { return m_surface; }
     void* map(SurfaceType type, const VideoFormat& fmt, void* handle, int plane) Q_DECL_OVERRIDE;
     void unmap(void *handle) Q_DECL_OVERRIDE;
 protected:
@@ -85,6 +86,9 @@ public:
 private:
     surface_glx_ptr surfaceGLX(const display_ptr& dpy, GLuint tex);
     QMap<GLuint,surface_glx_ptr> glx_surfaces; // render to different texture. surface_glx_ptr is created with texture
+    int m_width;
+    int m_height;
+    bool m_regenerateGlx = true;
 };
 
 class X11;

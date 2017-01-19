@@ -191,7 +191,8 @@ void OpenGLVideo::setOpenGLContext(QOpenGLContext *ctx)
 #else
     QSizeF surfaceSize = QSizeF(ctx->device()->width(), ctx->device()->height());
 #endif
-    setProjectionMatrixToRect(QRectF(QPointF(), surfaceSize));
+    qDebug() << "******************************" << Q_FUNC_INFO << surfaceSize;
+    //setProjectionMatrixToRect(QRectF(QPointF(), surfaceSize));
     if (d.manager)
         return;
     // TODO: what if ctx is delete?
@@ -243,6 +244,8 @@ void OpenGLVideo::setCurrentFrame(const VideoFrame &frame)
 
 void OpenGLVideo::setProjectionMatrixToRect(const QRectF &v)
 {
+    qDebug() << " SET VIEWPORT setProjectionMatrixToRect " << v.width() << v.height();
+
     setViewport(v);
 }
 
@@ -250,6 +253,9 @@ void OpenGLVideo::setViewport(const QRectF &r)
 {
     DPTR_D(OpenGLVideo);
     d.rect = r;
+
+    qDebug() << " SET VIEWPORT " << d.rect.width() << d.rect.width();
+
     if (d.norm_viewport) {
         d.matrix.setToIdentity();
         if (d.mesh_type == SphereMesh)
@@ -325,6 +331,7 @@ void OpenGLVideo::render(const QRectF &target, const QRectF& roi, const QMatrix4
     DPTR_D(OpenGLVideo);
     Q_ASSERT(d.manager);
     Q_EMIT beforeRendering();
+
     DYGL(glViewport(d.rect.x(), d.rect.y(), d.rect.width(), d.rect.height())); // viewport was used in gpu filters is wrong, qt quick fbo item's is right(so must ensure setProjectionMatrixToRect was called correctly)
     const qint64 mt = d.material->type();
     if (d.material_type != mt) {

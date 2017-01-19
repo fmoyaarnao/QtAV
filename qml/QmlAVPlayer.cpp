@@ -648,6 +648,26 @@ qreal QmlAVPlayer::bufferProgress() const
     return mpPlayer->bufferProgress();
 }
 
+int QmlAVPlayer::bufferValue()
+{
+    return mpPlayer->bufferValue();
+}
+
+void QmlAVPlayer::setBufferValue(int value)
+{
+    mpPlayer->setBufferValue(value);
+}
+
+int QmlAVPlayer::startPosition()
+{
+    return mpPlayer->startPosition();
+}
+
+void QmlAVPlayer::setStartPosition(qint64 pos)
+{
+    mpPlayer->setStartPosition(pos);
+}
+
 QmlAVPlayer::Status QmlAVPlayer::status() const
 {
     if (!mpPlayer)

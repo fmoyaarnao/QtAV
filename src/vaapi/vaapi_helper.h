@@ -299,20 +299,20 @@ public:
     ~surface_glx_t() {destroy();}
     bool create(GLuint tex) {
         destroy();
-        VA_ENSURE_TRUE(vaCreateSurfaceGLX(m_dpy->get(), GL_TEXTURE_2D, tex, &m_glx), false);
+        if(vaDisplayIsValid(m_dpy->get())) { VA_ENSURE_TRUE(vaCreateSurfaceGLX(m_dpy->get(), GL_TEXTURE_2D, tex, &m_glx), false); }
         return true;
     }
     bool destroy() {
         if (!m_glx)
             return true;
-        VA_ENSURE_TRUE(vaDestroySurfaceGLX(m_dpy->get(), m_glx), false);
+        if(vaDisplayIsValid(m_dpy->get())) { VA_ENSURE_TRUE(vaDestroySurfaceGLX(m_dpy->get(), m_glx), false); }
         m_glx = 0;
         return true;
     }
     bool copy(const surface_ptr& surface) {
         if (!m_glx)
             return false;
-        VA_ENSURE_TRUE(vaCopySurfaceGLX(m_dpy->get(), m_glx, surface->get(), VA_FRAME_PICTURE | surface->colorSpace()), false);
+        if(vaDisplayIsValid(m_dpy->get())) { VA_ENSURE_TRUE(vaCopySurfaceGLX(m_dpy->get(), m_glx, surface->get(), VA_FRAME_PICTURE | surface->colorSpace()), false); }
         return true;
     }
 private:

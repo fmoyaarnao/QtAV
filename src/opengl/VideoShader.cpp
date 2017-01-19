@@ -937,10 +937,14 @@ bool VideoMaterialPrivate::initPBO(int plane, int size)
 bool VideoMaterialPrivate::initTexture(GLuint tex, GLint internal_format, GLenum format, GLenum dataType, int width, int height)
 {
     DYGL(glBindTexture(target, tex));
-    setupQuality();
+    setupQuality();    
     // This is necessary for non-power-of-two textures
     DYGL(glTexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
     DYGL(glTexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+
+    DYGL(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+    DYGL(glPixelStorei(GL_PACK_ALIGNMENT, 1));
+
     DYGL(glTexImage2D(target, 0, internal_format, width, height, 0/*border, ES not support*/, format, dataType, NULL));
     DYGL(glBindTexture(target, 0));
     return true;
@@ -1128,6 +1132,7 @@ bool VideoMaterialPrivate::ensureTextures()
             } else {
                 DYGL(glGenTextures(1, &tex));
                 owns_texture[tex] = true;
+
                 initTexture(tex, internal_format[p], data_format[p], data_type[p], texture_size[p].width(), texture_size[p].height());
             }
             qDebug("texture for plane %d is created (id=%u)", p, tex);

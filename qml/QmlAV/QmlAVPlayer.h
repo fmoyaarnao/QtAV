@@ -39,6 +39,8 @@ class QmlAVPlayer : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
+    Q_PROPERTY(int bufferValue READ bufferValue WRITE setBufferValue)
+    Q_PROPERTY(int startPosition READ startPosition WRITE setStartPosition)
     Q_PROPERTY(qreal volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
     Q_PROPERTY(Error error READ error NOTIFY errorChanged)
@@ -170,6 +172,12 @@ public:
     void setFastSeek(bool value);
 
     qreal bufferProgress() const;
+
+    int bufferValue();
+    void setBufferValue(int value);
+
+    int startPosition();
+    void setStartPosition(qint64 pos);
 
     Status status() const;
     Error error() const;

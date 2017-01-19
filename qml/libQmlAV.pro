@@ -77,12 +77,14 @@ SOURCES += \
     QuickSubtitle.cpp \
     MediaMetaData.cpp \
     QuickSubtitleItem.cpp \
-    QuickVideoPreview.cpp
+    QuickVideoPreview.cpp \
+    QmlAV/QuickFBOCapturer.cpp
 
 HEADERS += \
     QmlAV/QuickSubtitle.h \
     QmlAV/QuickSubtitleItem.h \
-    QmlAV/QuickVideoPreview.h
+    QmlAV/QuickVideoPreview.h \
+    QmlAV/QuickFBOCapturer.h
 
 SDK_HEADERS += \
     QmlAV/Export.h \
