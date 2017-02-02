@@ -1,7 +1,7 @@
 TEMPLATE = lib
 MODULE_INCNAME = QtAV # for mac framework. also used in install_sdk.pro
 TARGET = QtAV
-QT += core gui
+QT += core gui gui-private
 #CONFIG *= ltcg
 greaterThan(QT_MAJOR_VERSION, 4) {
   contains(QT_CONFIG, opengl) {
@@ -16,6 +16,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 CONFIG *= qtav-buildlib
 static: CONFIG *= static_ffmpeg
 INCLUDEPATH += $$[QT_INSTALL_HEADERS] # TODO: ffmpeg dir
+INCLUDEPATH += C:/Qt/5.7/msvc2015/include/QtPlatformSupport/5.7.1
 
 #mac: simd.prf will load qt_build_config and the result is soname will prefixed with QT_INSTALL_LIBS and link flag will append soname after QMAKE_LFLAGS_SONAME
 config_libcedarv: CONFIG *= neon config_simd #need by qt4 addSimdCompiler(). neon or config_neon is required because tests/arch can not detect neon
@@ -293,7 +294,13 @@ config_dxva {
   CONFIG *= d3dva
   DEFINES *= QTAV_HAVE_DXVA=1
   SOURCES += codec/video/VideoDecoderDXVA.cpp
+
   LIBS += -lole32
+}
+
+win32 {
+  HEADERS += dxva/SurfaceInteropDXVA.h
+  SOURCES += dxva/SurfaceInteropDXVA.cpp
 }
 d3dva {
   HEADERS += codec/video/VideoDecoderD3D.h

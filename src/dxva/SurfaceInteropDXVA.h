@@ -19,6 +19,8 @@
 #include <d3d9.h>
 #include <dxva2api.h>
 
+#include <QMutex>
+
 namespace QtAV
 {
     class EGLWrapper;
