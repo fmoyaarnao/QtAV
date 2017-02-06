@@ -159,7 +159,6 @@ bool GLXInteropResource::map(const surface_ptr& surface, GLuint tex, int w, int 
     surface_glx_ptr glx = glx_surfaces[tex];
 
     if(!surface.isNull() && (surface->width() != m_width || m_height != surface->height())) {
-        qDebug() << "HEEEEREEEEE";
         m_width = surface->width();
         m_height = surface->height();
         m_regenerateGlx = true;

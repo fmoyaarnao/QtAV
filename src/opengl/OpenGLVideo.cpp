@@ -191,7 +191,6 @@ void OpenGLVideo::setOpenGLContext(QOpenGLContext *ctx)
 #else
     QSizeF surfaceSize = QSizeF(ctx->device()->width(), ctx->device()->height());
 #endif
-    qDebug() << "******************************" << Q_FUNC_INFO << surfaceSize;
     //setProjectionMatrixToRect(QRectF(QPointF(), surfaceSize));
     if (d.manager)
         return;
