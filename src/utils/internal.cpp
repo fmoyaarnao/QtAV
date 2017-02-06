@@ -258,10 +258,6 @@ void setOptionsToFFmpegObj(const QVariant& opt, void* obj)
 //FIXME: why to lower case?
 void setOptionsToDict(const QVariant& opt, AVDictionary** dict)
 {
-    qDebug() << "*****************************************************************************************";
-    qDebug() << "SETTING WHITELIST";
-    av_dict_set(dict, "protocol_whitelist", "file,crypto",0);
-
     if (!opt.isValid())
         return;
     if (opt.type() == QVariant::Map) {

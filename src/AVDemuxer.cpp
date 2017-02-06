@@ -1148,16 +1148,12 @@ void AVDemuxer::Private::applyOptionsForDict()
         av_dict_free(&dict);
         dict = 0; //aready 0 in av_free
     }
-//    if (options.isEmpty())
-//        return;
+    if (options.isEmpty())
+        return;
     QVariant opt(options);
     if (options.contains(QStringLiteral("avformat")))
         opt = options.value(QStringLiteral("avformat"));
     Internal::setOptionsToDict(opt, &dict);
-
-    qDebug() << "*****************************************************************************************";
-    qDebug() << "SETTING WHITELIST";
-    av_dict_set(&dict, "protocol_whitelist", "file,crypto",0);
 
     if (opt.type() == QVariant::Map) {
         QVariantMap avformat_dict(opt.toMap());
