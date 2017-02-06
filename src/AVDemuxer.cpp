@@ -802,9 +802,19 @@ bool AVDemuxer::load()
     //deprecated
     //if(av_find_stread->inputfo(d->format_ctx)<0) {
     //TODO: avformat_find_stread->inputfo is too slow, only useful for some video format
+
+    // We set Analyze Duration to 1 second
+    int64_t old_max_analyze_duration = d->format_ctx->max_analyze_duration;
+    d->format_ctx->max_analyze_duration = QString(d->format_ctx->iformat->name).contains(QRegExp("hls|applehttp"))
+            ? 1 * AV_TIME_BASE
+            : old_max_analyze_duration; // Only analyze during 1 second if the input frame contains hsl or applehttp
+
     d->interrupt_hanlder->begin(InterruptHandler::FindStreamInfo);
     ret = avformat_find_stream_info(d->format_ctx, NULL);
     d->interrupt_hanlder->end();
+
+    // restart max analyze durantion
+    d->format_ctx->max_analyze_duration = old_max_analyze_duration;
 
     if (ret < 0) {
         setMediaStatus(InvalidMedia);
