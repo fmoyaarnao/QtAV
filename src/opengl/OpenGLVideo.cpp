@@ -243,8 +243,6 @@ void OpenGLVideo::setCurrentFrame(const VideoFrame &frame)
 
 void OpenGLVideo::setProjectionMatrixToRect(const QRectF &v)
 {
-    qDebug() << " SET VIEWPORT setProjectionMatrixToRect " << v.width() << v.height();
-
     setViewport(v);
 }
 
@@ -252,9 +250,6 @@ void OpenGLVideo::setViewport(const QRectF &r)
 {
     DPTR_D(OpenGLVideo);
     d.rect = r;
-
-    qDebug() << " SET VIEWPORT " << d.rect.width() << d.rect.width();
-
     if (d.norm_viewport) {
         d.matrix.setToIdentity();
         if (d.mesh_type == SphereMesh)
