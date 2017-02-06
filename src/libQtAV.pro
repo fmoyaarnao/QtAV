@@ -16,7 +16,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 CONFIG *= qtav-buildlib
 static: CONFIG *= static_ffmpeg
 INCLUDEPATH += $$[QT_INSTALL_HEADERS] # TODO: ffmpeg dir
-INCLUDEPATH += $$(QTDIR)/include/QtPlatformSupport/5.7.1
+INCLUDEPATH += $$(QTDIR)/include/QtPlatformSupport/$$QT_VERSION
 
 #mac: simd.prf will load qt_build_config and the result is soname will prefixed with QT_INSTALL_LIBS and link flag will append soname after QMAKE_LFLAGS_SONAME
 config_libcedarv: CONFIG *= neon config_simd #need by qt4 addSimdCompiler(). neon or config_neon is required because tests/arch can not detect neon
@@ -291,14 +291,13 @@ win32:!winrt {
   }
 }
 config_dxva {
-  CONFIG *= d3dva
+  CONFIG *= d3dva dxva
   DEFINES *= QTAV_HAVE_DXVA=1
   SOURCES += codec/video/VideoDecoderDXVA.cpp
 
   LIBS += -lole32
 }
-
-win32 {
+dxva {
   HEADERS += dxva/SurfaceInteropDXVA.h
   SOURCES += dxva/SurfaceInteropDXVA.cpp
 }
