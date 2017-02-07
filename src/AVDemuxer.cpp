@@ -805,9 +805,7 @@ bool AVDemuxer::load()
 
     // We set Analyze Duration to 1 second
     int64_t old_max_analyze_duration = d->format_ctx->max_analyze_duration;
-    d->format_ctx->max_analyze_duration = QString(d->format_ctx->iformat->name).contains(QRegExp("hls|applehttp"))
-            ? 1 * AV_TIME_BASE
-            : old_max_analyze_duration; // Only analyze during 1 second if the input frame contains hsl or applehttp
+    d->format_ctx->max_analyze_duration = 1 * AV_TIME_BASE; // Only analyze during 1 second
 
     d->interrupt_hanlder->begin(InterruptHandler::FindStreamInfo);
     ret = avformat_find_stream_info(d->format_ctx, NULL);
