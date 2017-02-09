@@ -29,7 +29,7 @@ contains(QMAKE_HOST.os,Windows) {
 } else {
   SCRIPT_SUFFIX=sh
   MOVE = mv
-  COPY = cp -f
+  COPY = cp -af
   COPY_DIR = $$COPY -R
   MKDIR = mkdir -p
   RM = rm -f
