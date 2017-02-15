@@ -77,6 +77,7 @@ public:
     /// GLTextureSurface only supports rgb32
     void* map(SurfaceType type, const VideoFormat& fmt, void* handle, int plane) Q_DECL_OVERRIDE;
     void unmap(void *handle) Q_DECL_OVERRIDE;
+    IDirect3DSurface9 * getSurface();
 protected:
     /// copy from gpu (optimized if possible) and convert to target format if necessary
     void* mapToHost(const VideoFormat &format, void *handle, int plane);

@@ -111,6 +111,10 @@ void SurfaceInterop::unmap(void *handle)
     m_resource->unmap(*((GLuint*)handle));
 }
 
+ID3D11Texture2D * SurfaceInterop::getSurface() {
+    return m_surface.Get();
+}
+
 void* SurfaceInterop::mapToHost(const VideoFormat &format, void *handle, int plane)
 {
     Q_UNUSED(plane);

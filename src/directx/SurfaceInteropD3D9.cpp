@@ -149,6 +149,11 @@ void SurfaceInterop::unmap(void *handle)
     m_resource->unmap(*((GLuint*)handle));
 }
 
+IDirect3DSurface9 * SurfaceInterop::getSurface()
+{
+    return m_surface;
+}
+
 void* SurfaceInterop::mapToHost(const VideoFormat &format, void *handle, int plane)
 {
     Q_UNUSED(plane);
