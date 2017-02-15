@@ -50,7 +50,7 @@ public:
         qmlRegisterType<QuickVideoPreview>(uri, 1, 4, "VideoPreview");
 #if QT_VERSION >= QT_VERSION_CHECK(5, 2, 0)
         qmlRegisterType<QuickFBORenderer>(uri, 1, 5, "VideoOutput2");
-        qmlRegisterType<QuickFBORenderer>(uri, 1, 5, "VideoOutputCapturer");
+        qmlRegisterType<QuickFBOCapturer>(uri, 1, 5, "VideoOutputCapturer");
 #endif
         qmlRegisterUncreatableType<VideoCapture>(uri, 1, 6, "VideoCapture", trUtf8("VideoCapture is provided by MediaPlayer"));
         qmlRegisterType<MediaMetaData>();
