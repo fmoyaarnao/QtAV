@@ -37,7 +37,7 @@ enum InteropType {
     InteropGL //NOT IMPLEMENTED
 };
 
-class InteropResource
+class Q_AV_EXPORT InteropResource
 {
 public:
     typedef unsigned int GLuint;
@@ -70,7 +70,7 @@ protected:
 typedef QSharedPointer<InteropResource> InteropResourcePtr;
 
 
-class SurfaceInterop Q_DECL_FINAL: public VideoSurfaceInterop
+class Q_AV_EXPORT SurfaceInterop Q_DECL_FINAL: public VideoSurfaceInterop
 {
 public:
     SurfaceInterop(const InteropResourcePtr& res) : m_resource(res), frame_width(0), frame_height(0) {}

@@ -33,7 +33,7 @@ enum InteropType {
     InteropGL
 };
 
-class InteropResource
+class Q_AV_EXPORT InteropResource
 {
 public:
     static bool isSupported(InteropType type = InteropAuto);
@@ -62,7 +62,7 @@ protected:
 };
 typedef QSharedPointer<InteropResource> InteropResourcePtr;
 
-class SurfaceInterop Q_DECL_FINAL: public VideoSurfaceInterop
+class Q_AV_EXPORT SurfaceInterop Q_DECL_FINAL: public VideoSurfaceInterop
 {
 public:
     SurfaceInterop(const InteropResourcePtr& res) : m_surface(0), m_resource(res), frame_width(0), frame_height(0) {}
