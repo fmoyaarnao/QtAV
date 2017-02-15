@@ -351,9 +351,9 @@ message("creating script for module Qt$$module ...")
   }
   sdk_h_install.commands += $$quote($$MKDIR $$system_path($$[QT_INSTALL_HEADERS]/QtAV/$$VERSION/QtAV/))
   contains(QMAKE_HOST.os,Windows) {
-    config_dxva {
-        sdk_h_install.commands += $$quote($$MKDIR $$system_path($$[QT_INSTALL_HEADERS]/QtAV/dxva))
-        sdk_h_install.commands += $$quote($$COPY_DIR $$system_path($$PROJECTROOT/src/dxva/*.h) $$system_path($$[QT_INSTALL_HEADERS]/QtAV/dxva))
+    config_d3d11va {
+        sdk_h_install.commands += $$quote($$MKDIR $$system_path($$[QT_INSTALL_HEADERS]/QtAV/directx))
+        sdk_h_install.commands += $$quote($$COPY_DIR $$system_path($$PROJECTROOT/src/directx/*.h) $$system_path($$[QT_INSTALL_HEADERS]/QtAV/directx))
     }
     sdk_h_install.commands += $$quote($$COPY_DIR $$system_path($$PROJECTROOT/src/QtAV/private) $$system_path($$[QT_INSTALL_HEADERS]/QtAV/private))
     sdk_h_install.commands += $$quote($$COPY_DIR $$system_path($$PROJECTROOT/src/QtAV/private) $$system_path($$[QT_INSTALL_HEADERS]/QtAV/$$VERSION/QtAV/private))

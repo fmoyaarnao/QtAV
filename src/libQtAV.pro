@@ -291,15 +291,11 @@ win32:!winrt {
   }
 }
 config_dxva {
-  CONFIG *= d3dva dxva
+  CONFIG *= d3dva
   DEFINES *= QTAV_HAVE_DXVA=1
   SOURCES += codec/video/VideoDecoderDXVA.cpp
 
   LIBS += -lole32
-}
-dxva {
-  HEADERS += dxva/SurfaceInteropDXVA.h
-  SOURCES += dxva/SurfaceInteropDXVA.cpp
 }
 d3dva {
   HEADERS += codec/video/VideoDecoderD3D.h
