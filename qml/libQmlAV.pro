@@ -77,14 +77,12 @@ SOURCES += \
     QuickSubtitle.cpp \
     MediaMetaData.cpp \
     QuickSubtitleItem.cpp \
-    QuickVideoPreview.cpp \
-    QmlAV/QuickFBOCapturer.cpp
+    QuickVideoPreview.cpp
 
 HEADERS += \
     QmlAV/QuickSubtitle.h \
     QmlAV/QuickSubtitleItem.h \
-    QmlAV/QuickVideoPreview.h \
-    QmlAV/QuickFBOCapturer.h
+    QmlAV/QuickVideoPreview.h
 
 SDK_HEADERS += \
     QmlAV/Export.h \
@@ -98,8 +96,10 @@ HEADERS *= \
     $$SDK_HEADERS
 
 greaterThan(QT_MINOR_VERSION, 1) {
-  HEADERS += QmlAV/QuickFBORenderer.h
-  SOURCES += QuickFBORenderer.cpp
+  HEADERS += QmlAV/QuickFBORenderer.h \
+             QmlAV/QuickFBOCapturer.h
+  SOURCES += QuickFBORenderer.cpp \
+             QuickFBOCapturer.cpp
 }
 
 unix:!android:!mac {
