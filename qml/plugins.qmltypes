@@ -462,6 +462,17 @@ Module {
         }
     }
     Component {
+        name: "QtAV::QuickFBOCapturer"
+        defaultProperty: "data"
+        prototype: "QtAV::QuickFBORenderer"
+        exports: ["QtAV/VideoOutputCapturer 1.5"]
+        exportMetaObjectRevisions: [0]
+        Signal {
+            name: "frameCaptured"
+            Parameter { name: "frame"; type: "QtAV::VideoFrame" }
+        }
+    }
+    Component {
         name: "QtAV::QuickVideoPreview"
         defaultProperty: "data"
         prototype: "QtAV::QuickFBORenderer"

@@ -29,6 +29,7 @@
 #include "QmlAV/MediaMetaData.h"
 #include "QmlAV/QuickVideoPreview.h"
 #if QT_VERSION >= QT_VERSION_CHECK(5, 2, 0)
+#include "QmlAV/QuickFBORenderer.h"
 #include "QmlAV/QuickFBOCapturer.h"
 #endif
 

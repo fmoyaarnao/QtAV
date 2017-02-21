@@ -1,16 +1,20 @@
-#ifndef QUICKFBOCAPTURER_H
-#define QUICKFBOCAPTURER_H
+#ifndef QTAV_QUICKFBOCAPTURER_H
+#define QTAV_QUICKFBOCAPTURER_H
 
-#include "QmlAV/QuickFBORenderer.h"
+#include <QmlAV/QuickFBORenderer.h>
 
-class QuickFBOCapturer: public QtAV::QuickFBORenderer
+namespace QtAV {
+class QuickFBOCapturer: public QuickFBORenderer
 {
     Q_OBJECT
-protected:
-    virtual bool receiveFrame(const QtAV::VideoFrame &frame) Q_DECL_OVERRIDE;
+public:
+    explicit QuickFBOCapturer(QQuickItem *parent = 0);
 
-signals:
+Q_SIGNALS:
     void frameCaptured(const QtAV::VideoFrame & frame);
-};
 
-#endif // QUICKFBOCAPTURER_H
+protected:
+    virtual bool receiveFrame(const VideoFrame &frame) Q_DECL_OVERRIDE;
+};
+} // namespace QtAV
+#endif // QTAV_QUICKFBOCAPTURER_H

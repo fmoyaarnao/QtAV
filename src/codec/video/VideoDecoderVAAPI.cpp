@@ -480,12 +480,25 @@ bool VideoDecoderVAAPIPrivate::open()
         } else if (dt == VideoDecoderVAAPI::GLX) {
             nd.type = NativeDisplay::GLX;
         }
+
         display = display_t::create(nd);
         if (display) {
             display_type = dt;
+
+            int majorVersion, minorVersion;
+            if (vaInitialize(display->get(), &majorVersion, &minorVersion) != VA_STATUS_SUCCESS) {
+                qDebug() << " Error initializating the display";
+            }
+            else {
+                qDebug() << " Display initialized successfully " << majorVersion << minorVersion;
+            }
+
             break;
         }
+
+
     }
+
     if (!display/* || vaDisplayIsValid(display->get()) != 0*/) {
         qWarning("Could not get a VAAPI device");
         return false;
