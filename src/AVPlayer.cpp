@@ -484,9 +484,6 @@ void AVPlayer::setFile(const QString &path)
     if (p.startsWith(QLatin1String("file:")))
         p = Internal::Path::toLocal(p);
 
-    // For get native separators
-    p = QDir::toNativeSeparators(p);
-
     d->reset_state = d->current_source.type() != QVariant::String || d->current_source.toString() != p;
     d->current_source = QVariant::fromValue(p);
     // TODO: d->reset_state = d->demuxer2.setMedia(path);

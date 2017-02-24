@@ -23,6 +23,7 @@
 #include <QtAV/AVPlayer.h>
 #include <QtAV/AudioOutput.h>
 #include <QtAV/VideoCapture.h>
+#include <QDir>
 
 template<typename ID, typename T>
 static QStringList idsToNames(QVector<ID> ids) {
@@ -136,14 +137,19 @@ void QmlAVPlayer::setSource(const QUrl &url)
     if (mSource == url)
         return;
     mSource = url;
-    if (url.isLocalFile() || url.scheme().isEmpty()
-            || url.scheme().startsWith("qrc")
+    QString file;
+    if (url.isLocalFile() || url.scheme().isEmpty()) {
+        file = QDir::toNativeSeparators(QUrl::fromPercentEncoding(url.toEncoded(QUrl::PreferLocalFile)));
+    }
+    else if (url.scheme().startsWith("qrc")
             || url.scheme().startsWith("avdevice")
             // TODO: what about custom io?
-            )
-        mpPlayer->setFile(QUrl::fromPercentEncoding(url.toEncoded()));
-    else
-        mpPlayer->setFile(url.toEncoded());
+            ) {
+        file = QUrl::fromPercentEncoding(url.toEncoded());
+    } else {
+        file = url.toEncoded();
+    }
+    mpPlayer->setFile(file);
     Q_EMIT sourceChanged(); //TODO: Q_EMIT only when player loaded a new source
 
     if (mHasAudio) {
