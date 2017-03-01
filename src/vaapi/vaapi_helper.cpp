@@ -35,6 +35,9 @@ dll_helper::dll_helper(const QString &soname, int version)
         m_lib.setFileNameAndVersion(soname, version);
     else
         m_lib.setFileName(soname);
+
+    if (m_lib.isLoaded()) return;
+
     if (m_lib.load()) {
         qDebug("%s loaded", m_lib.fileName().toUtf8().constData());
     } else {
