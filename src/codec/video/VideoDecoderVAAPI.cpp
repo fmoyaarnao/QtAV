@@ -707,6 +707,7 @@ void VideoDecoderVAAPIPrivate::close()
         VAWARN(vaDestroyConfig(display->get(), config_id));
         config_id = VA_INVALID_ID;
     }
+    VAWARN(vaTerminate(display->get()));
     display.clear();
     releaseUSWC();
     nb_surfaces = 0;
@@ -745,14 +746,15 @@ bool VideoDecoderVAAPIPrivate::getBuffer(void **opaque, uint8_t **data)
                 qWarning("VAAPI- Too many surfaces. requested: %d, maximun: %d", surfaces.size() + 1, kMaxSurfaces);
             }
             // Set itarator position to the newly allocated surface (end-1)
-            const int old_size = surfaces.size();
-            if (!ensureSurfaces(old_size + 1, surface_width, surface_height, false)) {
-                // destroy the new created surface. Surfaces can only be destroyed after the context associated has been destroyed?
-                VAWARN(vaDestroySurfaces(display->get(), surfaces.data() + old_size, 1));
-                surfaces.resize(old_size);
-            }
-            it = surfaces_free.end();
-            --it;
+//            const int old_size = surfaces.size();
+//            if (!ensureSurfaces(old_size + 1, surface_width, surface_height, false)) {
+//                // destroy the new created surface. Surfaces can only be destroyed after the context associated has been destroyed?
+//                VAWARN(vaDestroySurfaces(display->get(), surfaces.data() + old_size, 1));
+//                surfaces.resize(old_size);
+//            }
+//            it = surfaces_free.end();
+//            --it;
+            it = surfaces_free.begin();
         }
     }
     id =(*it)->get();

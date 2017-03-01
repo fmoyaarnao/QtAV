@@ -42,7 +42,7 @@ public:
         , release_buffer(NULL)
         , reget_buffer(NULL)
         , get_buffer2(NULL)
-        , threads(0)
+        , threads(1)
         , copy_mode(VideoDecoderFFmpegHW::OptimizedCopy)
         , hw_w(0)
         , hw_h(0)
