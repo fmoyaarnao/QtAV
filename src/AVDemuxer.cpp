@@ -425,9 +425,11 @@ bool AVDemuxer::readFrame()
     d->pkt = Packet();
     // no lock required because in AVDemuxThread read and seek are in the same thread
     AVPacket packet;
+    av_init_packet(&packet);
     d->interrupt_hanlder->begin(InterruptHandler::Read);
     int ret = av_read_frame(d->format_ctx, &packet); //0: ok, <0: error/end
     d->interrupt_hanlder->end();
+
     // TODO: why return 0 if interrupted by user?
     if (ret < 0) {
         //end of file. FIXME: why no d->eof if replaying by seek(0)?
@@ -448,31 +450,38 @@ bool AVDemuxer::readFrame()
 #endif
                 qDebug("End of file. erreof=%d feof=%d", ret == AVERROR_EOF, avio_feof(d->format_ctx->pb));
             }
+             av_packet_unref(&packet); //important!
             return false;
         }
         if (ret == AVERROR(EAGAIN)) {
             qWarning("demuxer EAGAIN :%s", av_err2str(ret));
+            av_packet_unref(&packet); //important!
             return false;
         }
         AVError::ErrorCode ec(AVError::ReadError);
         QString msg(tr("error reading stream data"));
         handleError(ret, &ec, msg);
         qWarning("[AVDemuxer] error: %s", av_err2str(ret));
+        av_packet_unref(&packet); //important!
         return false;
     }
+
     d->stream = packet.stream_index;
     //check whether the 1st frame is alreay got. emit only once
     if (!d->started) {
         d->started = true;
         Q_EMIT started();
     }
+
     if (d->stream != videoStream() && d->stream != audioStream() && d->stream != subtitleStream()) {
-        //qWarning("[AVDemuxer] unknown stream index: %d", stream);
+        av_packet_unref(&packet); //important!
         return false;
     }
+
     // TODO: v4l2 copy
     d->pkt = Packet::fromAVPacket(&packet, av_q2d(d->format_ctx->streams[d->stream]->time_base));
     av_packet_unref(&packet); //important!
+
     d->eof = false;
     if (d->pkt.pts > qreal(duration())/1000.0) {
         d->max_pts = d->pkt.pts;
@@ -878,6 +887,7 @@ bool AVDemuxer::unload()
             d->input->release();
         Q_EMIT unloaded();
     }
+
     return true;
 }
 

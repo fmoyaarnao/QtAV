@@ -126,9 +126,14 @@ bool Packet::fromAVPacket(Packet* pkt, const AVPacket *avpkt, double time_base)
     pkt->d = QSharedDataPointer<PacketPrivate>(new PacketPrivate());
     pkt->d->initialized = true;
     AVPacket *p = &pkt->d->avpkt;
+
+    if(p) {
+        av_packet_unref(p);
+    }
+
     av_packet_ref(p, (AVPacket*)avpkt);  //properties are copied internally
     // add ref without copy, bytearray does not copy either. bytearray options linke remove() is safe. omit FF_INPUT_BUFFER_PADDING_SIZE
-    pkt->data = QByteArray::fromRawData((const char*)p->data, p->size);
+    pkt->data = QByteArray((const char*)p->data, p->size);
     // QtAV always use ms (1/1000s) and s. As a result no time_base is required in Packet
     p->pts = pkt->pts * 1000.0;
     p->dts = pkt->dts * 1000.0;
@@ -176,6 +181,7 @@ Packet& Packet::operator =(const Packet& other)
 
 Packet::~Packet()
 {
+    data.clear();
 }
 
 const AVPacket *Packet::asAVPacket() const
