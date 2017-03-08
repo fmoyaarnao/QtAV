@@ -886,8 +886,6 @@ void QmlAVPlayer::_q_started()
     m_loading = false;
     mPlaybackState = PlayingState;
     applyChannelLayout();
-    // applyChannelLayout() first because it may reopen audio device
-    applyVolume(); //sender is AVPlayer
 
     mpPlayer->audio()->setMute(isMuted());
     mpPlayer->setSpeed(playbackRate());
