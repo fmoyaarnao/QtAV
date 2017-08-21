@@ -707,15 +707,18 @@ void VideoDecoderVAAPIPrivate::close()
         VAWARN(vaDestroyConfig(display->get(), config_id));
         config_id = VA_INVALID_ID;
     }
-    VAWARN(vaTerminate(display->get()));
-    display.clear();
+
+    surfaces_free.clear();
+    surfaces_used.clear();
+
     releaseUSWC();
     nb_surfaces = 0;
     surfaces.clear();
-    surfaces_free.clear();
-    surfaces_used.clear();
     surface_width = 0;
     surface_height = 0;
+
+//    VAWARN(vaTerminate(display->get()));
+    display.clear();
 }
 
 bool VideoDecoderVAAPIPrivate::getBuffer(void **opaque, uint8_t **data)

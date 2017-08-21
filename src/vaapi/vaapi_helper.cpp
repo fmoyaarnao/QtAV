@@ -348,24 +348,11 @@ display_ptr display_t::create(const NativeDisplay &display)
 
 display_t::~display_t()
 {
-    if (!m_display)
-        return;
-    bool init_va = false;
-#ifndef QT_NO_OPENGL
-    // TODO: if drm+egl works, init_va should be true for DRM
-    init_va = OpenGLHelper::isEGL() && nativeDisplayType() == NativeDisplay::X11;
-#endif
-#if defined(WORKAROUND_VATERMINATE_CRASH)
-    init_va = true;
-#endif
-    if (init_va) {
-        int mj, mn;
-        // FIXME: for libva-xxx we can unload after vaTerminate to avoid crash. But does not work for egl+dma/drm. I really don't know the reason
-        qDebug("vaInitialize before terminate. (work around for vaTerminate() crash)");
-        //VAWARN(vaInitialize(m_display, &mj, &mn));
+    if (m_native->getVADisplay()) {
+        qDebug("vaapi: destroy display %p", m_display);
+        VAWARN(vaTerminate(m_display));
     }
-    qDebug("vaapi: destroy display %p", m_display);
-    //VAWARN(vaTerminate(m_display)); //FIXME: what about thread?
+
     m_display = 0;
 }
 
