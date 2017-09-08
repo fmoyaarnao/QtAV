@@ -673,6 +673,13 @@ void* VideoDecoderVAAPIPrivate::setup(AVCodecContext *avctx)
         VAWARN(vaDestroyContext(display->get(), context_id));
         context_id = VA_INVALID_ID;
     }
+
+    static bool surfaceInit = false;
+    if (!surfaceInit) {
+        surface_width = codedWidth(codec_ctx);
+        surface_height = codedHeight(codec_ctx);
+    }
+
     // TODO: config_id reset?
     if (!ensureSurfaces(surface_count, surface_width, surface_height, true))
         return NULL;
