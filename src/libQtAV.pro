@@ -605,7 +605,8 @@ mac_framework { # from common.pri
         qtAtLeast(5,3): FRAMEWORK_HEADERS.path = Headers/$$MODULE_INCNAME
         FRAMEWORK_PRIVATE_HEADERS.version = Versions
         FRAMEWORK_PRIVATE_HEADERS.files = $$SDK_PRIVATE_HEADERS
-        FRAMEWORK_PRIVATE_HEADERS.path = Headers/$$VERSION/$$MODULE_INCNAME/private
+        #FRAMEWORK_PRIVATE_HEADERS.path = Headers/$$VERSION/$$MODULE_INCNAME/private
+        FRAMEWORK_PRIVATE_HEADERS.path = Headers/private
         QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS FRAMEWORK_PRIVATE_HEADERS
    }
 }
